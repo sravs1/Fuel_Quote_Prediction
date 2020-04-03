@@ -1,0 +1,21 @@
+body{
+	background: url(Gas_station.jpg) no-repeat;
+	background-size: cover;
+  display: flex;
+}
+table, th, td {
+  border: 1px solid blue;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+  text-align: left;
+}
+th,td{
+background-color:darkred;
+color: white;
+}
+caption{
+  color:white;
+  font-size:20px;;
+}
