@@ -6,7 +6,7 @@ $username = "root";
 $email    = "";
 $errors = array();
 $min=1;
-$max=1500;
+$max=500;
 
 // connect to the database
 $db = mysqli_connect('localhost', 'root', '', 'test');
@@ -42,20 +42,33 @@ $error=false;
 echo $error;
 
 // REGISTER USER
-if (isset($_POST['price_user'])) {
+if (isset($_POST['quote_user'])) {
   // receive all input values from the form
   $gallons = mysqli_real_escape_string($db, $_POST['gallons']);
   $deliveryDate = mysqli_real_escape_string($db, $_POST['deliveryDate']);
-  $month= date('m', strtotime($deliveryDate));
-  echo $month;
-
 if (filter_var($gallons, FILTER_VALIDATE_INT, array("options" => array("min_range"=>$min, "max_range"=>$max))) === false) {
   array_push($errors, "Gallons value must be btw 1 to 500");
   print("entering in error");
 }
-
 else{
       print("entereing in the calc part");
+      $sql="SELECT extract(month from delivery_date) as month from quote_details where email='$email'";
+      echo $sql;
+      $result=$db->query($sql);
+      if($result->num_rows>0){
+      while($row=$result->fetch_assoc()){
+        print("entered here");
+              $month=$row["month"];
+      }
+    }
+    else{
+      echo "entered in else";
+      echo $db->error;
+    }
+
+      echo "month is ";
+      echo $month;
+
       $company_profit_factor=0.1;
       $rate_fluctuation="";
       $suggested_price="";
@@ -89,17 +102,19 @@ else{
         $historyFactor = 0.01;        //determine if the user has history
              //if history, historyFacotry value
       }
+
     $margin=$current_price +($location_factor-$rate_fluctuation+$gallons_requested_factor+$company_profit_factor+$rate_fluctuation);
     $suggested_price=$current_price+$margin;
     $total_price=$gallons*$suggested_price;
+    echo "the inserting values are ";
+    echo "$gallons";
+    echo $deliveryDate;
+    echo $suggested_price;
+    echo $total_price;
+    echo $email;
 
-  }
-}
-  if (isset($_POST['quote_user'])) {
-/*$sql = "INSERT INTO quote_details (gallons,delivery_address,delivery_date,suggested_price,total_amount,email)
-  			  VALUES($gallons, '$address1','$deliveryDate',$suggested_price,$total_price,'$email')";*/
-  $sql = "INSERT INTO quote_details (gallons,delivery_address,delivery_date,suggested_price,total_amount,email)
-          VALUES('".$_POST['gallons']."', '".$_POST['deliveryAddress']."','".$_POST['deliveryDate']."','".$_POST['price']."','".$_POST['amount']."','".$_SESSION["email"]."')";
+    $sql = "INSERT INTO quote_details (gallons,delivery_address,delivery_date,suggested_price,total_amount,email)
+  			  VALUES($gallons, '$address1'.' '.'$address2'.' '.'$state',$deliveryDate,$suggested_price,$total_price,'$email')";
     if ($db->query($sql) === TRUE) {
         echo "inserted the row successfully";
     } else {
@@ -108,5 +123,7 @@ else{
   	$_SESSION['gallons'] =$gallons ;
   	$_SESSION['success'] = "You are now logged in";
 
-    header('location: quotehistory.php');
+    header('location: FUELQUOTE.php');
+  */
+}
 }

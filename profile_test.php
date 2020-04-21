@@ -12,8 +12,8 @@
 	      <h1 class="logo"></h1>
 	      <nav>
 	        <ul>
-						<li><a href="#">Client Profile</a></li>
-	          <li><a href="#">Fuel Quote</a></li>
+						<li><a href="profile_test.php">Client Profile</a></li>
+	          <li><a href="FUELQUOTE.php">Fuel Quote</a></li>
 	          <li><a href="#">Fuel Quote History</a></li>
 						<li><a href="#">Logout</a></li>
 	        </ul>
@@ -60,7 +60,7 @@
 				</div>
 			<?php  endif ?>
       <div class="font">State</div>
-			<select name="state1">
+			<select name="state">
         <option value="none" selected disabled hidden >--select an option--</option>
 				<option value="AL">Alabama (AL)</option>
 				<option value="AK">Alaska (AK)</option>
