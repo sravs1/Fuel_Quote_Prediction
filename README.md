@@ -20,6 +20,6 @@ Backend validation         profile_server.php
 
 Files related to Fuel Quote Module:
 Profile Module             FUELQUOTE.php
-style                      quoteStyle .css
+style                      quoteStyle.css
 JS Validation              quote.js
 Backend validation         QUOTESERVER.php
