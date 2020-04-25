@@ -14,8 +14,8 @@
 	        <ul>
 						<li><a href="profile_test.php">Client Profile</a></li>
 	          <li><a href="FUELQUOTE.php">Fuel Quote</a></li>
-	          <li><a href="#">Fuel Quote History</a></li>
-						<li><a href="#">Logout</a></li>
+	          <li><a href="quotehistory.php">Fuel Quote History</a></li>
+						<li><a href="logout.php">Logout</a></li>
 	        </ul>
 	      </nav>
 	    </div>
@@ -24,7 +24,7 @@
 		<h1 class="label">Client Profile Registration</h1>
 		<form class="profile_form" method="post" name="form" onsubmit="return validated()">
 			<div class="font">Fullname</div>
-			<input autocomplete="off" type="text" name="fullname" >
+			<input autocomplete="off" type="text" name="fullname" value="<?php if (isset($_POST['fullname'])) echo ($fullname); ?>" >
 			<?php  if (count($fullname_error) > 0) : ?>
 			  <div class="error">
 			  	<?php foreach ($fullname_error as $error) : ?>
@@ -33,16 +33,16 @@
 			  </div>
 			<?php  endif ?>
       <div class="font">Address1</div>
-			<input autocomplete="off" type="text" name="address1" >
+			<input autocomplete="off" type="text" name="address1" value="<?php if (isset($_POST['address1'])) echo ($address1); ?>" >
 			<?php  if (count($address1_error) > 0) : ?>
 				<div class="error">
 					<?php foreach ($address1_error as $error) : ?>
-						<p><font color="orange" size="1	px"><?php echo $error ?></font></p>
+						<p><font color="orange"><?php echo $error ?></font></p>
 					<?php endforeach ?>
 				</div>
 			<?php  endif ?>
       <div class="font">Address2</div>
-			<input autocomplete="off" type="text" name="address2">
+			<input autocomplete="off" type="text" name="address2" value="<?php if (isset($_POST['address2'])) echo ($address2); ?>">
 			<?php  if (count($address2_error) > 0) : ?>
 				<div class="error">
 					<?php foreach ($address2_error as $error) : ?>
@@ -51,7 +51,7 @@
 				</div>
 			<?php  endif ?>
       <div class="font">City</div>
-			<input autocomplete="off" type="text" name="city">
+			<input autocomplete="off" type="text" name="city" value="<?php if (isset($_POST['city'])) echo ($city); ?>">
 			<?php  if (count($city_error) > 0) : ?>
 				<div class="error">
 					<?php foreach ($city_error as $error) : ?>
@@ -121,8 +121,8 @@
 		<?php endforeach ?>
 	</div>
 <?php  endif ?>
-      <div class="font">Zipcode</div>
-      <input autocomplete="off" type="text" name="zipcode">
+      <div class="font" >Zipcode</div>
+      <input autocomplete="off" type="number" name="zipcode" value="<?php if (isset($_POST['zipcode'])) echo ($zipcode); ?>">
 			<?php  if (count($zipcode_error) > 0) : ?>
 				<div class="error">
 					<?php foreach ($zipcode_error as $error) : ?>

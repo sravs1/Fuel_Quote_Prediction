@@ -40,9 +40,13 @@ if(strlen($password)<6){
   	$password1 = md5($password);//encrypt the password before saving in the database
   	$query = "INSERT INTO users_data (email, password)
   			  VALUES('$email', '$password')";
+    $query1 = "INSERT INTO clientprofile(email) VALUES('$email')";
+  //  $query2 = "INSERT INTO quote_details(email) VALUES('$email')";
   	mysqli_query($db, $query);
   	$_SESSION['email'] = $email;
   	$_SESSION['success'] = "You are now logged in";
+    mysqli_query($db,$query1);
+    //mysqli_query($db,$query2);
     header('location: login.php');
   }
 }

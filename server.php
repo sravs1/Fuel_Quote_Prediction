@@ -1,6 +1,10 @@
 <?php
 session_start();
-
+/*
+if(isset($_SESSION['email'])){
+    header('location:dashboard.php');
+}
+*/
 // initializing variables
 $username = "root";
 $email    = "";
@@ -22,12 +26,11 @@ $db = mysqli_connect('localhost', 'root', '', 'test');
     	if (mysqli_num_rows($results) == 1) {
     	  $_SESSION['email'] = $email;
     	  $_SESSION['success'] = "You are now logged in";
-    	  header('location: fuelQuote.html');
+    	  header('location: FUELQUOTE.php');
     	}else {
     		array_push($errors, "Invalid username or password");
     	}
     }
 
   }
-
   ?>

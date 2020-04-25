@@ -12,6 +12,15 @@ $max=999999;
 // connect to the database
 $db = mysqli_connect('localhost', 'root', '', 'test');
 
+$datesql="select DAY(sysdate()) as day,MONTH(sysdate()) as month,YEAR(sysdate()) as year from dual";
+$result_curr_date=$db->query($datesql);
+if($result_curr_date->num_rows>0){
+  while($row=$result_curr_date->fetch_assoc()){
+    $curr_day=$row["day"];
+    $curr_month=$row["month"];
+    $curr_year=$row["year"];
+  }
+}
 if(!isset($_SESSION['email']))$_SESSION['email']=""; //if user is undefined set it to default (blank)
  if($_SESSION["email"]=="")header('Location: login.php'); //if user index is default (blank) redirect to login
 $error=false;
@@ -29,20 +38,15 @@ if($result->num_rows>0){
 while($row=$result->fetch_assoc()){
 $address1=$row["ADDRESS1"];
 if($address1==''){
-  //echo "<script>alert('Seems you are first time user.Please complete client progile registratrion');</script>";
-  //window.location.href='profile_test.php';
   echo "<script>
-alert('Seems you are first time user.Please complete client progile registratrion');
+alert('Seems you are first time user.Please complete client profile registratrion');
 window.location.href='profile_test.php';
 </script>";
 }
 $address2=$row["ADDRESS2"];
 $state=$row["STATE"];
 $zip=$row["ZIPCODE"];
-//echo "the address is ";
-//echo $address1;
-//echo $address2;
-//echo $state;
+
 }
 }
 $finAddress=$address1." ".$address2.' '.$state.' '.$zip;
@@ -60,6 +64,31 @@ if (isset($_POST['price_user']) && $error==false) {
   $deliveryDate = mysqli_real_escape_string($db, $_POST['deliveryDate']);
 //  echo "delivery date is ".$deliveryDate;
   $month= date('m', strtotime($deliveryDate));
+  $day=date('d', strtotime($deliveryDate));
+  $year=date('Y',strtotime($deliveryDate));
+
+  if($year>$curr_year){
+  //  echo "year is ".$year;
+    $error=false;
+  }
+  else if($year===$curr_year){
+    if($month>$curr_month){
+      $error=false;
+    }
+    else if($month==$curr_month){
+      if($day>=$curr_day){
+        $error=false;
+      }
+      else{
+        $error=true;
+        array_push($date_error,"Please pick an appropriate date");
+      }
+    }
+  }
+  else{
+    $error=true;
+    array_push($date_error,"Please pick an appropriate date");
+  }
 //  echo $month;
 
   if($gallons<1 || $gallons > 999999 || $gallons==0){
@@ -70,7 +99,7 @@ if (isset($_POST['price_user']) && $error==false) {
 }
 if ($deliveryDate==''){
   $error=true;
-  array_push($date_error,"Please pick a date");
+//  array_push($date_error,"Please pick a date");
 }
 if($error==false){
     //  print("entereing in the calc part");
@@ -123,8 +152,6 @@ if($error==false){
     $margin=$current_price*($location_factor-$historyFactor+$gallons_requested_factor+$company_profit_factor+$rate_fluctuation);
     $suggested_price=$current_price+$margin;
     $total_price=$gallons*$suggested_price;
-
-
   }
 }
   if (isset($_POST['quote_user'])) {
