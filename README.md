@@ -19,7 +19,8 @@ JS Validation              init.js
 Backend validation         profile_server.php
 
 Files related to Fuel Quote Module:
-Profile Module             FUELQUOTE.php
+Fuel Quote Module          FUELQUOTE.php
+QUote History              quotehistory.php
 style                      quoteStyle.css
 JS Validation              quote.js
 Backend validation         QUOTESERVER.php
